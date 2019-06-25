@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" 
+       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<title>Home</title>
+<link rel="stylesheet" type="text/css" href="/CSS/Dinkyui/dinkyui.min.css"/>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+<style type="text/css">
+	.aviso{
+	  margin: 0px;
+	}
+</style>
+</head>
+
+<body>
+
+<div sec:authorize="!isAuthenticated()">
+  <div th:replace="menuVisitante :: menu" ></div>
+</div>
+
+<div sec:authorize="hasRole('ROLE_USER')">
+  <div th:replace="cliente/menuCliente :: menu" ></div>
+</div>
+
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+  <div th:replace="gerente/menuGerente :: menu" ></div>
+</div>
+
+<div class="row">
+
+<div class="col-10 alert green" th:if="${!#strings.isEmpty(mensagemSucesso)}" >
+	<span class="alert-close">×</span>
+    <p class="content aviso" th:text="${mensagemSucesso}"></p>
+</div>
+
+<div class="col-12 sm-12 md-8 lg-8 push-lg-2 push-md-2">
+	
+	<div class="card-image">
+	  <img src="../images/burguer.jpg" alt="Foto">
+	  <div class="card-content">
+	    <h3 class="center">Bem vindo ao <span class="t-red">Burger Smash</span> <i class="fas fa-flag-usa"  style="font-size: 30px"></i> </h3>
+	    <p class="center">Não deixe de conferir o nosso cardápio feito especialmente para você fã de hamburguer.</p>
+	  </div>
+	</div>
+          
+</div>
+
+</div>
+
+<div th:replace="footer :: footer" ></div>
+
+<script type="text/javascript">
+
+
+let alert_message = document.getElementsByClassName('alert-close');
+for (let i = 0; i < alert_message.length; i++) {
+  alert_message[i].addEventListener('click', () => {
+    alert_message[i].parentElement.style.display = 'none';
+  });
+}
+          
+</script>
+</body>
+</html>

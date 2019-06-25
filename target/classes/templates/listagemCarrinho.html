@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/CSS/Dinkyui/dinkyui.min.css"/>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+</head>
+<body>
+
+<div th:replace="cliente/menuCliente :: menu" ></div>
+
+<div class="row">
+
+<div class="col-12 sm-12 md-8 lg-8 push-lg-2 push-md-2" 
+th:if="${session.carrinho == null} or ${session.carrinho.itens.size()==0}" >
+	<div class="card center">
+	<h3>Seu carrinho está Vazio</h3>
+	<i class="fas fa-frown" style="font-size: 40px"></i>
+	</div>
+</div>    
+  
+  
+<div class="col-12 responsive" 
+th:unless="${session.carrinho == null} or ${session.carrinho.itens.size()==0}">
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Item</th>
+      <th>Preço/Unidade</th>
+      <th>Quantidade</th>
+      <th>Preço Total</th>
+    </tr>
+  </thead>
+  <tbody th:each = "item, iter : ${session.carrinho.itens}">
+    <tr>
+      <td th:text = "${iter.index} + 1"></td>
+      <td th:text = "${item.prato.nome}"></td>
+      <td th:text = "'R$'+${item.prato.preco}"></td>
+      <td th:text = "${item.quantidade}"></td>
+      <td th:text = "'R$'+${item.prato.preco}*${item.quantidade}"></td>
+      <td> <a th:href="@{/carrinho/aumentar/{id}(id=${item.prato.id})}"> <button class="btn blue-darken"> <i class="fas fa-plus"></i> </button> </a> </td>
+      <td> <a th:href="@{/carrinho/diminuir/{id}(id=${item.prato.id})}"> <button class="btn blue-darken"> <i class="fas fa-minus"></i> </button> </a> </td>
+      <td> <a th:href="@{/carrinho/remover/{id}(id=${item.prato.id})}"> <button class="btn red-darken"> <i class="fas fa-trash-alt"></i> </button> </a> </td>    
+    </tr>
+  </tbody> 
+</table>
+<h3 > Total do Pedido: R$ <span th:text="${session.carrinho.precoTotal()}"></span> <i class="fas fa-smile-wink" style="font-size: 30px"></i></h3>
+
+<a>
+<button class="btn green" id="modal-show"> Confirmar Pedido </button>
+</a>
+</div>
+
+<div id="myModal" class="modal">
+  <div class="modal-card">
+    <span class="close">×</span>
+    <div class="modal-content">
+      <form th:object="${endereco}" method="post" action="/pedido/confirmar">
+      
+      
+      <h5>Forma de Pagamento</h5>
+      
+		<label class="form-checkbox">Cartão de Crédito
+		  <input type="radio" name="pagamento" value="cartao_credito">
+		  <span class="checkradio"></span>
+		</label>
+		<label class="form-checkbox">Cartão de Débito
+		  <input type="radio" name="pagamento" value="cartao_debito">
+		  <span class="checkradio"></span>
+		</label>
+		<label class="form-checkbox">Vale Refeição
+		  <input type="radio" name="pagamento" value="vale_refeicao">
+		  <span class="checkradio"></span>
+		</label>
+		<label class="form-checkbox">A Vista
+		  <input type="radio" name="pagamento" checked value="a_vista">
+		  <span class="checkradio"></span>
+		</label>
+          
+      <h5>Endereço de Entrega:</h5>
+         
+         <div class="row">
+         
+         <div class="col-10 sm-10 md-5 lg-4">
+         
+         <div class="form-group">
+           <label>Rua:</label>
+           <input th:field="*{rua}" type="text" name="rua">
+           <div class="alert red" th:if="${#fields.hasErrors('rua')}">
+             <span class="alert-close">×</span>
+             <p class="content aviso" th:each="err : ${#fields.errors('rua')}" th:text="${err}"></p>
+           </div>
+         </div>
+       
+         </div>
+         
+         <div class="col-10 sm-10 md-5 lg-4">
+         
+         <div class="form-group">
+           <label>Bairro:</label>
+           <input th:field="*{bairro}" type="text" name="bairro">
+           <div class="alert red" th:if="${#fields.hasErrors('bairro')}">
+             <span class="alert-close">×</span>
+             <p class="content aviso" th:each="err : ${#fields.errors('bairro')}" th:text="${err}"></p>
+           </div>
+         </div>
+         
+         </div>        
+         
+         <div class="col-10 sm-10 md-5 lg-4">
+         
+         <div class="form-group">
+           <label>Número:</label>
+           <input th:field="*{numero}" type="text" name="numero">
+           <div class="alert red" th:if="${#fields.hasErrors('numero')}">
+             <span class="alert-close">×</span>
+             <p class="content aviso" th:each="err : ${#fields.errors('numero')}" th:text="${err}"></p>
+           </div>
+         </div>
+         
+         </div>
+         
+         <div class="col-10 sm-10 md-5 lg-4">
+         
+         <div class="form-group">
+           <label>Complemento:</label>
+           <input th:field="*{complemento}" type="text" name="complemento">
+           
+         </div>
+         
+         </div>
+         
+         <div class="col-10 sm-10 md-5 lg-4">
+         
+         <div class="form-group">
+           <label>Cidade:</label>
+           <input th:field="*{cidade}" type="text" name="cidade">
+           <div class="alert red" th:if="${#fields.hasErrors('cidade')}">
+             <span class="alert-close">×</span>
+             <p class="content aviso" th:each="err : ${#fields.errors('cidade')}" th:text="${err}"></p>
+           </div>
+         </div>
+         
+         </div>
+         
+         <div class="col-10 sm-10 md-5 lg-4">
+         
+         <div class="form-group">
+           <label>Estado</label>
+           <input th:field="*{estado}" type="text" name="estado">
+           <div class="alert red" th:if="${#fields.hasErrors('estado')}">
+             <span class="alert-close">×</span>
+             <p class="content aviso" th:each="err : ${#fields.errors('estado')}" th:text="${err}"></p>
+           </div>
+         </div>
+         
+         </div>
+         </div>
+      <button type="submit" class="btn green"> Confirmar Pedido </button>
+      
+      </form>
+    </div>
+  </div>
+</div>
+
+</div>   
+<div th:replace="footer :: footer" ></div>      
+
+<script type="text/javascript">
+
+let modal = document.getElementById('myModal');
+document.getElementById("modal-show").addEventListener('click', () => {
+  modal.style.display = "block"; 
+});
+document.getElementsByClassName("close")[0].addEventListener('click', () => {
+  modal.style.display = "none";
+});
+window.addEventListener('click', (event) => {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+});
+
+
+let alert_message = document.getElementsByClassName('alert-close');
+for (let i = 0; i < alert_message.length; i++) {
+  alert_message[i].addEventListener('click', () => {
+    alert_message[i].parentElement.style.display = 'none';
+  });
+}
+
+</script>
+
+</body>
+</html>

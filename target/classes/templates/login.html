@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/CSS/Dinkyui/dinkyui.min.css"/>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+</head>
+<body>
+
+<div sec:authorize="!isAuthenticated()">
+  <div th:replace="menuVisitante :: menu" ></div>
+</div>
+
+<div sec:authorize="hasRole('ROLE_USER')">
+  <div th:replace="cliente/menuCliente :: menu" ></div>
+</div>
+
+<div class="row">
+
+<div class="col-12 sm-12 md-8 lg-8 push-lg-2 push-md-2">
+	<div class="card">
+		<div class="card-title">
+	    <h3>Login</h3>
+	    <p class="card-subtitle">
+        </p>
+	    </div>
+        <div class="card-content">
+        
+		    <form method="post">
+		         
+		         <div class="row">
+		         
+		         <div class="col-12">
+		         
+		         <div class="form-group" >
+		           <label>Email:</label>
+		           <input type="text" name="username">
+		         </div>  
+		         
+		         </div>
+		         
+		         <div class="col-12">
+		         
+		         <div class="form-group">
+		           <label>Senha:</label>
+		           <input type="password" name="password">  
+		         </div>
+		         
+		         </div>          
+		         
+		        <div class="col-12">
+		          
+		        <div class="form-group">
+				<button class="btn green" id="confirmar" type="submit">Logar</button>
+				</div>
+				</div>
+				
+		        </div>
+		    </form>  
+        
+        </div>
+    </div>
+</div>  
+</div>
+<div th:replace="footer :: footer" ></div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/CSS/Dinkyui/dinkyui.min.css"/>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+
+</head>
+<body>
+
+<div th:fragment="menu">
+
+
+<nav class="navbar red-darken">
+  <input type="checkbox" id="navbar-check">
+  <div class="navbar-header">
+    <div class="navbar-title">
+      <a href="/">
+       <i class="fas fa-hamburger"  style="font-size: 30px"></i> 
+       <i class="fas fa-flag-usa"  style="font-size: 30px"></i>
+      </a>
+    </div>
+  </div>
+  <div class="navbar-btn">
+    <label for="navbar-check">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+  </div>
+  
+  <div class="navbar-links">
+    <a href="/prato/listar" class="t-amber">Cardápio</a>
+    <a href="/cliente/cadastro" class="t-amber">Cadastrar</a>
+    <a href="/entrar" class="t-amber">Entrar</a>
+  </div>
+</nav>
+        
+          
+</div>     
+
+</body>
+</html>

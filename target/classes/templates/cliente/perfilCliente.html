@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/CSS/Dinkyui/dinkyui.min.css"/>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+</head>
+<body>
+
+<div sec:authorize="hasRole('ROLE_USER')">
+  <div th:replace="cliente/menuCliente :: menu" ></div>
+</div>
+
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+  <div th:replace="gerente/menuGerente :: menu" ></div>
+</div>
+
+<div class="row">
+
+<div th:object="${cliente}" class="col-12 sm-12 md-8 lg-8 push-lg-2 push-md-2">
+	<div class="card">
+		<div class="card-title">
+	    <h3 th:text = "*{nome}"></h3>
+	    <p class="card-subtitle">
+	    
+          <span sec:authorize="hasRole('ROLE_USER')">Cliente</span>
+          <span sec:authorize="hasRole('ROLE_ADMIN')">Gerente</span>
+        
+	    </p>
+	    </div>
+        <div class="card-content">
+        <p><b>Email:</b> <span th:text = "*{email}"></span> </p>
+        <span><b>CPF:</b> <span th:text = "*{cpf}"></span> </span>
+        <p><b>Data de Nascimento:</b> <span th:text = "*{{dataNascimento}}"></span> </p>
+        <p><b>Endereço:</b> <span th:text = "*{endereco.rua} +  ', ' + *{endereco.bairro} +  ', ' + *{endereco.numero} +  ', ' + *{endereco.cidade} +  ', ' + *{endereco.estado}"></span> </p>
+        </div>
+        <a th:href="@{/cliente/atualizar/{id}(id=${cliente.id})}"> <button class="btn blue-darken"> <i class="fas fa-user-edit"></i> </button> </a>
+        <a th:href="@{/cliente/excluir/{id}(id=${cliente.id})}"> <button class="btn red-darken"> <i class="fas fa-user-times"></i> </button> </a>
+	</div>
+</div>  
+</div>
+
+<div th:replace="footer :: footer" ></div>
+</body>
+</html>

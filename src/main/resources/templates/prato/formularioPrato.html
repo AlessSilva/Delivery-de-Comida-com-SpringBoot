@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<meta charset="UTF-8">
+	<title>Cliente Cadastro</title>
+	<link rel="stylesheet" type="text/css" href="/CSS/Dinkyui/dinkyui.min.css"/>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+	<style type="text/css">
+	.aviso{
+	  margin: 0px;
+	}
+	</style>
+</head>
+<body>
+
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+  <div th:replace="gerente/menuGerente :: menu" ></div>
+</div>
+
+<div class="row">
+
+<div class="card col-12 sm-12 md-8 lg-8 push-lg-2 push-md-2">
+
+    <form th:object="${prato}" method="post" action="/prato/salvar" enctype="multipart/form-data">
+         
+         <h4> Dados do Prato:</h4>
+         
+         <div class="row">
+         
+         <input type="hidden" th:field="*{id}">
+         
+         <div class="col-10 sm-10 md-10 lg-8">
+         
+         <div class="form-group" >
+           <label>Nome:</label>
+           <input th:field="*{nome}" type="text" name="nome">
+           <div class="alert red" th:if="${#fields.hasErrors('nome')}">
+             <span class="alert-close">×</span>
+             <p class="content aviso" th:each="err : ${#fields.errors('nome')}" th:text="${err}">
+             </p>
+           </div>
+         </div>  
+         
+         </div>
+         
+         <div class="col-10 sm-10 md-5 lg-4">
+         
+         <div class="form-group">
+           <label>Preço:</label>
+           <input th:field="*{preco}" type="text" name="preco">
+           
+           <div class="alert red" th:if="${#fields.hasErrors('preco')}">
+             <span class="alert-close">×</span>
+             <p class="content aviso" th:each="err : ${#fields.errors('preco')}" th:text="${err}"></p>
+           </div>
+         
+         </div>
+         
+         </div> 
+         
+         <div class="col-12">
+           
+			<div class="upload-file">
+			  <button class="selected-file indigo">Escolher Foto do Prato</button>
+			  <input type="file" id="myfile" name="imagem" />
+			  <span class="filename-upload" id="filename">Nenhum arquivo selecionado</span>
+			</div>
+          
+         </div>         
+         
+        <div class="col-12">
+          
+        <div class="form-group">
+		<button class="btn green" id="confirmar" type="submit"><i class="fas fa-check"></i>Confirmar</button>
+		</div>
+		</div>
+		
+        </div>
+    </form>    
+</div>
+</div>    
+<script type="text/javascript">
+
+let alert_message = document.getElementsByClassName('alert-close');
+for (let i = 0; i < alert_message.length; i++) {
+  alert_message[i].addEventListener('click', () => {
+    alert_message[i].parentElement.style.display = 'none';
+  });
+}
+          
+
+var file = document.getElementById("myfile");
+file.onchange = function(){
+  if(file.files.length > 0){
+    document.getElementById('filename').innerHTML = file.files[0].name;
+  }
+};
+          
+</script>
+<div th:replace="footer :: footer" ></div>
+</body>
+</html>

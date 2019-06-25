@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<meta charset="UTF-8">
+	<title>Cliente Cadastro</title>
+	<link rel="stylesheet" type="text/css" href="/CSS/Dinkyui/dinkyui.min.css"/>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+	<style type="text/css">
+	.aviso{
+	  margin: 0px;
+	}
+	</style>
+</head>
+<body>
+
+<div sec:authorize="!isAuthenticated()">
+  <div th:replace="menuVisitante :: menu" ></div>
+</div>
+
+<div sec:authorize="hasRole('ROLE_USER')">
+  <div th:replace="cliente/menuCliente :: menu" ></div>
+</div>
+
+<div class="row">
+
+<div class="card col-12 sm-12 md-8 lg-8 push-lg-2 push-md-2">
+
+    <form th:object="${cliente}" method="post" action="/cliente/salvar">
+         
+         <h4> Dados Pessoais:</h4>
+         
+         <div class="row">
+         
+         <input type="hidden" th:field="*{id}">
+         
+         <div class="col-10 sm-10 md-10 lg-8">
+         
+         <div class="form-group" >
+           <label>Nome:</label>
+           <input th:field="*{nome}" type="text" name="nome">
+           <div class="alert red" th:if="${#fields.hasErrors('nome')}">
+             <span class="alert-close">×</span>
+             <p class="content aviso" th:each="err : ${#fields.errors('nome')}" th:text="${err}">
+             </p>
+           </div>
+         </div>  
+         
+         </div>
+         
+         <div class="col-10 sm-10 md-5 lg-4">
+         
+         <div class="form-group">
+           <label>Cpf:</label>
+           <input data-mask="000.000.000-00" th:field="*{cpf}" type="text" name="cpf">
+           
+           <div class="alert red" th:if="${#fields.hasErrors('cpf')}">
+             <span class="alert-close">×</span>
+             <p class="content aviso" th:each="err : ${#fields.errors('cpf')}" th:text="${err}"></p>
+           </div>
+           
+           <div class="alert red" th:if="${!#strings.isEmpty(mensagemCpfV)}" >
+             <span class="alert-close">×</span>
+             <p class="content aviso" th:text="${mensagemCpfV}"></p>
+           </div>
+         
+         </div>
+         
+         </div> 
+                  
+         <div class="col-10 sm-10 md-5 lg-4">
+         
+         <div class="form-group">
+           <label>Data Nascimento:</label>
+           <input data-mask="00/00/0000" th:field="*{{dataNascimento}}" type="text" id="dataNascimento" name="dataNascimento">
+           
+           <div class="alert red" th:if="${#fields.hasErrors('dataNascimento')}">
+             <span class="alert-close">×</span>
+             <p class="content aviso" th:each="err : ${#fields.errors('dataNascimento')}" th:text="${err}"></p>
+           </div>
+     
+         </div>
+         
+         </div>
+        
+        <div class="col-10 sm-10 md-5 lg-4">
+         
+         <div class="form-group">
+           <label>Senha:</label>
+           <input th:field="*{senha}" type="text" name="senha">
+           
+           <div class="alert red" th:if="${#fields.hasErrors('senha')}">
+             <span class="alert-close">×</span>
+             <p class="content aviso" th:each="err : ${#fields.errors('senha')}" th:text="${err}"></p>
+           </div>
+         </div> 
+         
+         </div>
+       
+          <div class="col-10 sm-10 md-5 lg-4">
+          
+          <div class="form-group">
+           <label>Email:</label>
+           <input th:field="*{email}" type="text" name="email">
+           <div class="alert red" th:if="${#fields.hasErrors('email')}" >
+             <span class="alert-close">×</span>
+             <p class="content aviso" th:each="err : ${#fields.errors('email')}" th:text="${err}"></p>
+           </div>
+           
+           <div class="alert red" th:if="${!#strings.isEmpty(mensagemEmailV)}" >
+             <span class="alert-close">×</span>
+             <p class="content aviso" th:text="${mensagemEmailV}"></p>
+           </div>
+           
+           </div>
+         </div>
+         
+         </div>
+         
+         <h4> Endereço:</h4>
+         
+         <input type="hidden" th:field="*{endereco.id}">
+         
+         <div class="row">
+         
+         <div class="col-10 sm-10 md-5 lg-4">
+         
+         <div class="form-group">
+           <label>Rua:</label>
+           <input th:field="*{endereco.rua}" type="text" name="rua">
+           
+            <div class="alert red" th:if="${!#strings.isEmpty(mensagemRuaV)}" >
+             <span class="alert-close">×</span>
+             <p class="content aviso" th:text="${mensagemRuaV}"></p>
+           </div>
+           
+         </div>
+         
+         </div>
+         
+         <div class="col-10 sm-10 md-5 lg-4">
+         
+         <div class="form-group">
+           <label>Bairro:</label>
+           <input th:field="*{endereco.bairro}" type="text" name="bairro">
+           
+           <div class="alert red" th:if="${!#strings.isEmpty(mensagemBairroV)}" >
+             <span class="alert-close">×</span>
+             <p class="content aviso" th:text="${mensagemBairroV}"></p>
+           </div>
+           
+         </div>
+         
+         </div>        
+         
+         <div class="col-10 sm-10 md-5 lg-4">
+         
+         <div class="form-group">
+           <label>Número:</label>
+           <input th:field="*{endereco.numero}" type="text" name="numero">
+           
+           <div class="alert red" th:if="${!#strings.isEmpty(mensagemNumeroV)}" >
+             <span class="alert-close">×</span>
+             <p class="content aviso" th:text="${mensagemNumeroV}"></p>
+           </div>
+           
+         </div>
+         
+         </div>
+         
+         <div class="col-10 sm-10 md-5 lg-4">
+         
+         <div class="form-group">
+           <label>Complemento:</label>
+           <input th:field="*{endereco.complemento}" type="text" name="complemento">
+           
+         </div>
+         
+         </div>
+         
+         <div class="col-10 sm-10 md-5 lg-4">
+         
+         <div class="form-group">
+           <label>Cidade:</label>
+           <input th:field="*{endereco.cidade}" type="text" name="cidade">
+           
+           <div class="alert red" th:if="${!#strings.isEmpty(mensagemCidadeV)}" >
+             <span class="alert-close">×</span>
+             <p class="content aviso" th:text="${mensagemCidadeV}"></p>
+           </div>
+           
+         </div>
+         
+         </div>
+         
+         <div class="col-10 sm-10 md-5 lg-4">
+         
+         <div class="form-group">
+           <label>Estado</label>
+           <input th:field="*{endereco.estado}" type="text" name="estado">
+         
+           <div class="alert red" th:if="${!#strings.isEmpty(mensagemEstadoV)}" >
+             <span class="alert-close">×</span>
+             <p class="content aviso" th:text="${mensagemEstadoV}"></p>
+           </div>
+         
+         </div>
+         
+         </div>
+         
+         
+        <div class="col-12">
+          
+        <div class="form-group">
+		<button class="btn green" id="confirmar" type="submit"><i class="fas fa-check"></i>Confirmar</button>
+		</div>
+		</div>
+		
+        </div>
+    </form>    
+</div>
+</div>  
+
+<script type="text/javascript" src="/JS/jquery.js"></script>  
+<script type="text/javascript" src="/JS/jquery.mask.min.js"></script>
+
+<script type="text/javascript">
+
+let alert_message = document.getElementsByClassName('alert-close');
+for (let i = 0; i < alert_message.length; i++) {
+  alert_message[i].addEventListener('click', () => {
+    alert_message[i].parentElement.style.display = 'none';
+  });
+}
+
+</script>
+<div th:replace="footer :: footer" ></div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/CSS/Dinkyui/dinkyui.min.css"/>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+</head>
+<body>
+
+<div th:replace="gerente/menuGerente :: menu" ></div>
+
+<div class="row">
+    
+<div class="col-12 responsive">
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nome</th>
+      <th>CPF</th>
+      <th>Email</th>
+      <th>Data de Nascimento</th>
+    </tr>
+  </thead>
+  <tbody th:each = "cliente, inter : ${clientes}">
+	    <tr>
+	      <td th:text = "${inter.index} + 1"></td>
+	      <td th:text = "${cliente.nome}"></td>
+	      <td th:text = "${cliente.cpf}"></td>
+	      <td th:text = "${cliente.email}"></td>
+	      <td th:text = "${{cliente.dataNascimento}}"></td>
+	    </tr>
+	  </tbody> 
+</table>
+</div>
+
+</div>   
+<div th:replace="footer :: footer" ></div>
+</body>
+</html>

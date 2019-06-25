@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Comprovante</title>
+<link rel="stylesheet" type="text/css" href="/CSS/Dinkyui/dinkyui.min.css"/>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+</head>
+<body>
+
+<div sec:authorize="hasRole('ROLE_USER')">
+  <div th:replace="cliente/menuCliente :: menu" ></div>
+</div>
+
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+  <div th:replace="gerente/menuGerente :: menu" ></div>
+</div>
+
+<div class="row">
+
+<div class="col-12 sm-12 md-8 lg-8 push-lg-2 push-md-2 " th:object="${pedido}">
+	<div class="card">
+	  <div class="card-title">
+	    <h3>Recibo</h3>
+	    <p class="card-subtitle" th:text = "'Código do Pedido: ' + *{id}">
+	    </p>
+	  </div>
+	  <div class="card-content responsive">
+	         
+			<table>
+			  <thead>
+			    <tr>
+			      <th>#</th>
+			      <th>Nome</th>
+			      <th>Preço/Unidade</th>
+			      <th>Quantidade</th>
+                  <th>Preço Total</th>
+			    </tr>
+			  </thead>
+			  <tbody class="striped" th:each = "item, iter : *{itens}">
+			    <tr>
+			      <td th:text = "${iter.index} + 1"></td>
+			      <td th:text="${item.prato.getNome()}" ></td>
+			      <td th:text="${item.prato.getPreco()}"></td>
+			      <td th:text="${item.quantidade}"></td>
+			      <td th:text = "'R$'+${item.prato.preco}*${item.quantidade}"></td>
+			    </tr>
+			    
+			  </tbody> 
+			</table>
+          
+	    
+	    <h5>Valor Total: R$ <span class="t-red" th:text = "*{valorTotal} "></span></h5>
+	    
+	    <h5>Endereço de Entrega:</h5>
+	    <form>
+         
+         <div class="row">
+         
+         <div class="col-10 sm-10 md-5 lg-4">
+         
+         <div class="form-group">
+           <label>Rua:</label>
+           <input th:value="*{endereco.getRua()}" type="text" disabled>
+         </div>
+       
+         </div>
+         
+         <div class="col-10 sm-10 md-5 lg-4">
+         
+         <div class="form-group">
+           <label>Bairro:</label>
+           <input th:value="*{endereco.getBairro()}" type="text" disabled>
+         </div>
+         
+         </div>        
+         
+         <div class="col-10 sm-10 md-5 lg-4">
+         
+         <div class="form-group">
+           <label>Número:</label>
+           <input th:value="*{endereco.getNumero()}" type="text" disabled>
+         </div>
+         
+         </div>
+         
+         <div class="col-10 sm-10 md-5 lg-4">
+         
+         <div class="form-group">
+           <label>Complemento:</label>
+           <input th:value="*{endereco.getComplemento()}" type="text" disabled>
+           
+         </div>
+         
+         </div>
+         
+         <div class="col-10 sm-10 md-5 lg-4">
+         
+         <div class="form-group">
+           <label>Cidade:</label>
+           <input th:value="*{endereco.getCidade()}" type="text" disabled>
+         </div>
+         
+         </div>
+         
+         <div class="col-10 sm-10 md-5 lg-4">
+         
+         <div class="form-group">
+           <label>Estado</label>
+           <input th:value="*{endereco.getEstado()}" type="text" disabled>
+         </div>
+         
+         </div>
+         </div>
+      
+      </form>
+	  
+	  <h5>Tipo de Pagamento: <span th:text = "*{tipoPagamento} "></span></h5>
+	    
+   </div>
+</div>  
+</div>
+<div th:replace="footer :: footer" ></div> 
+</body>
+</html>

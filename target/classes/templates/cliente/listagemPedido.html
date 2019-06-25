@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<title>Pedidos</title>
+<link rel="stylesheet" type="text/css" href="/CSS/Dinkyui/dinkyui.min.css"/>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+</head>
+<body>
+
+<div sec:authorize="hasRole('ROLE_USER')">
+  <div th:replace="cliente/menuCliente :: menu" ></div>
+</div>
+
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+  <div th:replace="gerente/menuGerente :: menu" ></div>
+</div>
+
+<div class="row">
+    
+<div class="col-12 responsive">
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Data</th>
+      <th>Preço Total</th>
+      <th>Tipo Pagamento</th>
+      <th sec:authorize="hasRole('ROLE_ADMIN')">Cliente</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody th:each = "pedido, iter : ${pedidos}">
+    <tr>
+      <td th:text = "${iter.index} + 1"></td>
+      <td th:text = "${{pedido.dataSolicitacao}}"></td>
+      <td th:text = "'R$'+${pedido.valorTotal}"></td>
+      <td th:text = "${pedido.tipoPagamento}"></td>
+      <td sec:authorize="hasRole('ROLE_ADMIN')" th:text = "${pedido.cliente.email}"></td>
+      <td> 
+      <a th:href="@{/pedido/recibo/{id}(id=${pedido.id})}">    
+		<button class="btn blue-darken" > <i class="fas fa-receipt"></i> </button>
+      </a> 
+      </td>
+    </tr>
+  </tbody> 
+</table>
+
+</div>
+
+</div>   
+<div th:replace="footer :: footer" ></div>      
+</body>
+</html>

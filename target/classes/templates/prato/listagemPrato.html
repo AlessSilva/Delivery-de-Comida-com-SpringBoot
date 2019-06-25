@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<title>Cardápio</title>
+<link rel="stylesheet" type="text/css" href="/CSS/Dinkyui/dinkyui.min.css"/>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+<style type="text/css">
+	  
+	  .overlay-text{
+	    background-color: rgba(1,1,1,0.5);
+	  }
+	  
+</style>
+
+</head>
+<body>
+
+<div sec:authorize="!isAuthenticated()">
+  <div th:replace="menuVisitante :: menu" ></div>
+</div>
+
+<div sec:authorize="hasRole('ROLE_USER')">
+  <div th:replace="cliente/menuCliente :: menu" ></div>
+</div>
+
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+  <div th:replace="gerente/menuGerente :: menu" ></div>
+</div>
+
+<div class="row">
+
+<div class="card col-10 push-1">
+
+<div class="row">
+
+    <h3 class="col-12 center">Cardápio</h3>
+
+    <div class="center col-12" sec:authorize="hasRole('ROLE_ADMIN')">
+      <a th:href="@{/prato/cadastro}">
+	    <button class="btn green">
+        + <i class="fas fa-utensils"  style="font-size: 20px"></i>
+        </button>
+      </a>
+    </div>
+
+    <div class="col-12 md-6 sm-8 lg-4" th:each = "prato : ${pratos}">
+    
+	    <div class=" card overlay-container top">
+	    <img th:src="@{'/images/pratos/'+${prato.id}+.png}" alt="Avatar" class="overlay-image">
+	    <div class="overlay-text">
+	    <div class="text">
+	    
+	    <table>
+	    <thead>
+	      <tr>
+	        <th>Nome</th>
+	        <th>Preço</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <tr>
+	        <td th:text = "${prato.nome}"></td>
+	        <td th:text = "'R$'+${prato.preco}"></td>
+	      </tr>
+	      
+	    </tbody> 
+	    </table>
+	    
+	    <a sec:authorize="!isAuthenticated()" th:href="@{/cliente/cadastro}">
+	    <button id="modal-show" class="btn green">
+        <i class="fas fa-cart-plus"  style="font-size: 15px"></i>
+        </button>
+        </a>
+	    
+	    <a sec:authorize="hasRole('ROLE_USER')" th:href="@{/carrinho/adicionar/{id}(id=${prato.id})}">
+	    <button id="modal-show" class="btn green">
+        <i class="fas fa-cart-plus"  style="font-size: 15px"></i>
+        </button>
+        </a>
+        
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/prato/atualizar/{id}(id=${prato.id})}">
+	    <button id="modal-show" class="btn blue">
+        <i class="fas fa-edit"  style="font-size: 15px"></i>
+        </button>
+        </a>
+        
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/prato/excluir/{id}(id=${prato.id})}">
+	    <button id="modal-show" class="btn red">
+        <i class="fas fa-trash-alt"  style="font-size: 15px"></i>
+        </button>
+        </a>
+        
+	    </div>
+	    </div>
+	    
+     	</div>    
+    
+    </div>
+</div>
+</div>
+</div>
+<div th:replace="footer :: footer" ></div>
+</body>
+</html>

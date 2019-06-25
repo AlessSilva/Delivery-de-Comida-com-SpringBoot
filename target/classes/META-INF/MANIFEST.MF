@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: alessandro
+Build-Jdk: 11.0.2
+Implementation-Title: restaurant
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: com.restaurant
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-boot
+ -starter-parent/restaurant
+Created-By: Maven Integration for Eclipse
+
