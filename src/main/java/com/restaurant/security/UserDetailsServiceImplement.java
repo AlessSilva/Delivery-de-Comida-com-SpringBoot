@@ -20,7 +20,7 @@ public class UserDetailsServiceImplement implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
 		Cliente cliente = clienteRepo.findByEmail( username );
-		if(cliente == null) {
+		if(cliente == null || (!cliente.isStatus()) ) {
 			throw new UsernameNotFoundException("usuário não encontrado");
 		}
 		return new User(cliente.getUsername(), cliente.getPassword(), true, true, true, true, cliente.getAuthorities());

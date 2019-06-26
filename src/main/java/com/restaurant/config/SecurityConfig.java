@@ -23,8 +23,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	   http.csrf().disable().authorizeRequests()
 	  
 	  .antMatchers("/").permitAll()
-	  .antMatchers("/cliente/cadastro").permitAll()
-	  .antMatchers("/cliente/salvar").permitAll()
+	  .antMatchers("/cliente/cadastro").not().authenticated()
+	  .antMatchers("/cliente/salvar").not().authenticated()
 	  .antMatchers("/prato/listar").permitAll()
 	  .antMatchers("/entrar").permitAll()
 	  .antMatchers("/cliente/listar").hasRole("ADMIN")

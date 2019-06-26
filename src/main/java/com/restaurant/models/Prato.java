@@ -27,6 +27,8 @@ public class Prato {
 	@OneToMany( mappedBy = "prato", cascade = CascadeType.ALL )
 	private List<Item> itens;
 	
+	private boolean status;
+	
 	public Prato() {}
 	
 	public Long getId() {
@@ -53,5 +55,12 @@ public class Prato {
 	public void setItens(List<Item> item) {
 		this.itens = item;
 	}
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+	
 
 }

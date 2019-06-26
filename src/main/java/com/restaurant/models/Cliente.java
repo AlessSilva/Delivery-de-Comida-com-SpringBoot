@@ -52,6 +52,8 @@ public class Cliente implements UserDetails{
 	@NotBlank( message = "Preencha o campo 'Email'" )
 	private String email;
 	
+	private boolean status;
+	
 	@OneToMany( mappedBy = "cliente", cascade = CascadeType.ALL )
 	private List<Pedido> pedidos;
 	
@@ -131,12 +133,30 @@ public class Cliente implements UserDetails{
 	public List<Role> getRoles() {
 		return roles;
 	}
-
-
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
+	public boolean isStatus() {
+		return status;
+	}
 
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+	
+	public boolean isADMIN() {
+		
+		for( Role r : roles ) {
+			
+			if( r.getPapel().equals("ROLE_ADMIN") ) {
+				return true;
+			}
+			
+		}
+		
+		return false;
+		
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -144,15 +164,11 @@ public class Cliente implements UserDetails{
 		return (Collection<? extends GrantedAuthority>) this.roles;
 	}
 
-
-
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
 		return this.senha;
 	}
-
-
 
 	@Override
 	public String getUsername() {
@@ -166,8 +182,6 @@ public class Cliente implements UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
-
-
 
 	@Override
 	public boolean isAccountNonLocked() {

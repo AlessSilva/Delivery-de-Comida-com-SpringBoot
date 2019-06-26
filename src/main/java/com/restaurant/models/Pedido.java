@@ -39,7 +39,7 @@ public class Pedido {
 	@OneToMany( mappedBy = "pedido", cascade = CascadeType.ALL )
 	private List<Item> itens;
 	
-	@ManyToOne
+	@ManyToOne ( cascade = CascadeType.ALL )
 	private Cliente cliente;
 
 	@OneToOne
@@ -122,6 +122,5 @@ public class Pedido {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
-	
 	
 }

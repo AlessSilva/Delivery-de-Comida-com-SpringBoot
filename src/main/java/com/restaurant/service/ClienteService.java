@@ -46,6 +46,8 @@ public class ClienteService {
 			retorno[0] = 1;
 			
 			cliente.setSenha( new BCryptPasswordEncoder().encode( cliente.getSenha() ));
+			
+			cliente.setStatus(true);
 	        
 			List<Role> roles = new ArrayList<Role>();
 			
@@ -71,6 +73,7 @@ public class ClienteService {
     	List<Role> roles = new ArrayList<Role>();
 		
     	cliente.setRoles(roles);
+    	cliente.setStatus(true);
     	
 		roles.add( roleRepo.findByPapel("ROLE_USER") );
 		
@@ -93,7 +96,10 @@ public class ClienteService {
 
 	public void excluirCliente(Long id) {
 		
-		clienteRepo.deleteById(id);
+		Cliente c = clienteRepo.getOne(id);
+		c.setStatus(false);
+		clienteRepo.save(c);
+		//clienteRepo.deleteById(id);
 		
 	}
 

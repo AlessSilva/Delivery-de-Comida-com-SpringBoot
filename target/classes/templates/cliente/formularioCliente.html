@@ -22,6 +22,10 @@
   <div th:replace="cliente/menuCliente :: menu" ></div>
 </div>
 
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+  <div th:replace="gerente/menuGerente :: menu" ></div>
+</div>
+
 <div class="row">
 
 <div class="card col-12 sm-12 md-8 lg-8 push-lg-2 push-md-2">

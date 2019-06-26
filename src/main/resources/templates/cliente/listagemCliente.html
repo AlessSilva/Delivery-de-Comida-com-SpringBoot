@@ -31,6 +31,10 @@
 	      <td th:text = "${cliente.cpf}"></td>
 	      <td th:text = "${cliente.email}"></td>
 	      <td th:text = "${{cliente.dataNascimento}}"></td>
+	      <td th:if="${cliente.isStatus() == true} and ${cliente.isADMIN()}"><i class="fas fa-user-shield" style="font-size: 30px" ></i></td>
+	      <td th:if="${cliente.isStatus() == true} and ${!cliente.isADMIN()}"><i class="fas fa-user-alt" style="font-size: 30px" ></i></td>
+	      <td th:unless="${cliente.isStatus() == true}"><i class="fas fa-user-alt-slash" style="font-size: 30px" ></i></td>
+	      <td ></td>
 	    </tr>
 	  </tbody> 
 </table>

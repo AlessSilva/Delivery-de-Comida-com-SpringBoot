@@ -1,5 +1,6 @@
 package com.restaurant.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ public class PratoService {
 
 	public void cadastrarPrato(Prato prato, MultipartFile imagem) {
 		
+		prato.setStatus(true);
 		pratoRepo.save(prato);
 		String path = "images/pratos/"+prato.getId()+ ".png";
 		FileUtil.salvarImagem( path, imagem );
@@ -27,7 +29,17 @@ public class PratoService {
 
 	public List<Prato> RetornarTodos() {
 		
-		return pratoRepo.findAll();
+		List<Prato> retorno = new ArrayList<Prato>();
+		
+		for( Prato p : pratoRepo.findAll() ) {
+			
+			if( p.isStatus() ) {
+				retorno.add(p);
+			}
+			
+		}
+		
+		return retorno;
 
 	}
 
@@ -38,7 +50,10 @@ public class PratoService {
 
 	public void excluirPrato(Long id) {
 		
-		pratoRepo.deleteById(id);
+		Prato p = pratoRepo.getOne(id);
+		p.setStatus(false);
+		pratoRepo.save(p);
+		//pratoRepo.deleteById(id);
 		
 	}
 	
