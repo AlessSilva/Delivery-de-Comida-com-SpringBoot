@@ -18,8 +18,17 @@
 </div>
 
 <div class="row">
+
+<div class="col-12 sm-12 md-8 lg-8 push-lg-2 push-md-2" 
+th:if="${pedidos.size() == 0}" >
+	<div class="card center">
+	<h3>Histórico de pedidos Vazio</h3>
+	<i class="fas fa-frown" style="font-size: 40px"></i>
+	</div>
+</div>    
     
-<div class="col-12 responsive">
+<div class="col-12 responsive" 
+th:unless="${pedidos.size() == 0}">
 
 <table>
   <thead>

@@ -50,9 +50,11 @@
          
          <div class="col-10 sm-10 md-5 lg-4">
          
-         <div class="form-group">
+         <div class="form-group" th:switch="*{id}" >
            <label>Cpf:</label>
-           <input data-mask="000.000.000-00" th:field="*{cpf}" type="text" name="cpf">
+           <input th:case="null" data-mask="000.000.000-00" th:field="*{cpf}" type="text" name="cpf">
+           <input th:case="*" data-mask="000.000.000-00" th:field="*{cpf}" type="text" name="cpf" 
+           readonly="readonly" style="background-color : #cccccc">
            
            <div class="alert red" th:if="${#fields.hasErrors('cpf')}">
              <span class="alert-close">×</span>
@@ -87,7 +89,7 @@
          
          <div class="form-group">
            <label>Senha:</label>
-           <input th:field="*{senha}" type="text" name="senha">
+           <input th:field="*{senha}" type="password" name="senha">
            
            <div class="alert red" th:if="${#fields.hasErrors('senha')}">
              <span class="alert-close">×</span>
@@ -99,9 +101,11 @@
        
           <div class="col-10 sm-10 md-5 lg-4">
           
-          <div class="form-group">
+          <div class="form-group" th:switch="*{id}">
            <label>Email:</label>
-           <input th:field="*{email}" type="text" name="email">
+           <input th:case="null" th:field="*{email}" type="text" name="email">
+           <input th:case="*" th:field="*{email}" type="text" name="email" 
+           style="background-color : #cccccc" readonly="readonly">
            <div class="alert red" th:if="${#fields.hasErrors('email')}" >
              <span class="alert-close">×</span>
              <p class="content aviso" th:each="err : ${#fields.errors('email')}" th:text="${err}"></p>

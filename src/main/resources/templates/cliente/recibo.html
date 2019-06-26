@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
 <title>Comprovante</title>
@@ -50,8 +51,8 @@
 			</table>
           
 	    
-	    <h5>Valor Total: R$ <span class="t-red" th:text = "*{valorTotal} "></span></h5>
-	    
+	    <h5 class="t-red" th:text = "'Valor Total: R$' + *{valorTotal} ">></span></h5>
+	    <h5>Tipo de Pagamento: <span th:text = "*{tipoPagamento} "></span></h5>
 	    <h5>Endereço de Entrega:</h5>
 	    <form>
          
@@ -114,9 +115,7 @@
          </div>
       
       </form>
-	  
-	  <h5>Tipo de Pagamento: <span th:text = "*{tipoPagamento} "></span></h5>
-	    
+	   
    </div>
 </div>  
 </div>

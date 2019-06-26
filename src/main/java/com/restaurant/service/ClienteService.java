@@ -67,7 +67,14 @@ public class ClienteService {
 	}
 	
     public void atualizarCliente( Cliente cliente ) {
+    	
+    	List<Role> roles = new ArrayList<Role>();
 		
+    	cliente.setRoles(roles);
+    	
+		roles.add( roleRepo.findByPapel("ROLE_USER") );
+		
+    	cliente.setSenha( new BCryptPasswordEncoder().encode( cliente.getSenha() ));
 		Cliente c = clienteRepo.save( cliente );
 		enderecoRepo.save(c.getEndereco());
 	}
