@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	  
 	  .antMatchers("/").permitAll()
 	  .antMatchers("/cliente/cadastro").not().authenticated()
-	  .antMatchers("/cliente/salvar").not().authenticated()
+	  .antMatchers("/cliente/salvar").permitAll()
 	  .antMatchers("/prato/listar").permitAll()
 	  .antMatchers("/entrar").permitAll()
 	  .antMatchers("/cliente/listar").hasRole("ADMIN")

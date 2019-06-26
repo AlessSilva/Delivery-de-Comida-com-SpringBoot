@@ -51,9 +51,9 @@
 			</table>
           
 	    
-	    <h5 class="t-red" th:text = "'Valor Total: R$' + *{valorTotal} ">></span></h5>
-	    <h5>Tipo de Pagamento: <span th:text = "*{tipoPagamento} "></span></h5>
-	    <h5>Endereço de Entrega:</h5>
+	    <h5 class="t-red"> <i class="fas fa-cash-register"></i> <span th:text = "'Valor Total: R$' + *{valorTotal}"></span></h5>
+	    <h5> <i class="fas fa-hand-holding-usd"></i> Tipo de Pagamento: <span th:text = "*{tipoPagamento} "></span></h5>
+	    <h5> <i class="fas fa-map-marker-alt"></i> Endereço de Entrega:</h5>
 	    <form>
          
          <div class="row">
@@ -117,6 +117,10 @@
       </form>
 	   
    </div>
+   <div class="card-footer center">
+    <p>2019 - Burguer Smash
+    </p>
+  </div>
 </div>  
 </div>
 <div th:replace="footer :: footer" ></div> 
